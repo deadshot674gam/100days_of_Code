@@ -1,25 +1,43 @@
-def main():
+def solve():
+    
     n = int(input())
-    score_card = dict()
-    max_score = 0
-    winners_name = ""
-    for i in range(n):
-        name, score = input().split()
-        score = int(score)
-        if name in score_card.keys():
-            score_card[name] += score
-        else:
-            score_card[name] = score
+    tally = {}
+    for _ in range(n):
+        name , score = input().split()
         
-        if max_score<score_card[name]:
-            max_score = score_card[name]
-            winners_name = name
+        score = int(score)
+        
+        if name in tally.keys():
+            tally[name].append(score)
+        else:
+            tally[name] = list([score])
+        
+    ms = []
+    for i in tally.keys():
+        ms.append(sum(tally[i]))
     
-    max_score1 = max(score_card.values())
-    if max_score!=max_score1:
-        for i in score_card.keys():
-            if score_card[i] == max_score1:
-                winners_name = i
+    m = max(ms)
+    winner = str()
+    for i in tally.keys():
+        if sum(tally[i]) == m:
+            winner = i
+        
+    for i in tally.keys():
+        sumi = 0
+        flag = False
+        for score in tally[i]:
+            sumi+= score
+            if sumi == m:
+                winner = i
+                flag = True
+                break
+        
+        if flag:
+            break
     
-    print(winners_name)
-main()
+    print(winner)
+    
+solve()
+    
+        
+        
